@@ -25,7 +25,7 @@ public class CategoriaRepositoryImpl implements CategoriaRepository {
 
         String sql = """
                     SELECT id, nombre, orden 
-                    FROM categoria
+                    FROM categorias
                     ORDER BY orden
                     """;
 
