@@ -34,8 +34,13 @@ class CategoriaServiceTest {
 
         log.info("Test findAll()");
 
-        //List<Categoria> categorias = categoriaService.findAll();
+        List<Categoria> categorias = categoriaService.findAll();
 
+        categorias.forEach(item -> { log.info(item.toString()); });
+
+        // validaciones
+//        assertTrue(categorias.size() > 0);
+        assertFalse(categorias.isEmpty()); // que la lista no este vacia
     }
 
     @Test
