@@ -44,10 +44,21 @@ class CategoriaMapper implements RowMapper<Categoria> {
 
     @Override
     public Categoria mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Categoria categoria = new Categoria();
-        categoria.setId(rs.getLong("id"));
-        categoria.setNombre(rs.getString("nombre"));
-        categoria.setOrden(rs.getInt("orden"));
+
+        Categoria categoria
+                = Categoria.builder()
+                            .id(rs.getLong("id"))
+                            .nombre(rs.getString("nombre"))
+                            .orden(rs.getInt("orden"))
+                            .build();
+
+//        Categoria categoria = new Categoria();
+//        categoria.setId(rs.getLong("id"));
+//        categoria.setNombre(rs.getString("nombre"));
+//        categoria.setOrden(rs.getInt("orden"));
+
+
         return categoria;
+
     }
 }
