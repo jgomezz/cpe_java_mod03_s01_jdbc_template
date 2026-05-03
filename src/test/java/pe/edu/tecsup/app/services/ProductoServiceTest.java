@@ -19,7 +19,7 @@ class ProductoServiceTest {
     private ProductoService productoService;
 
     @Test
-    void findAll() {
+    void testFindAll() {
 
         List<Producto> productos =
                 this.productoService.findAll();
@@ -30,4 +30,30 @@ class ProductoServiceTest {
     }
 
 
+    @Test
+    void testFindByName() {
+
+        List<Producto> productos =
+                this.productoService.findByName("AMD");
+
+        for(Producto producto : productos) log.info(producto.toString());
+
+        assertEquals(false, productos.isEmpty());
+    }
+
+    @Test
+    void testFindById() {
+    }
+
+    @Test
+    void testSave() {
+    }
+
+    @Test
+    void testDeleteById() {
+    }
+
+    @Test
+    void testUpdate() {
+    }
 }

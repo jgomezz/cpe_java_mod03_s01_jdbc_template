@@ -47,6 +47,61 @@ public class ProductoRepositoryImpl implements ProductoRepository {
         return productos;
     }
 
+    @Override
+    public List<Producto> findByName(String name) {
+
+        log.info("findByName products");
+
+        String sql = """
+                SELECT p.id, p.categorias_id, 
+                            c.nombre AS categorias_nombre,
+                            c.orden AS categorias_orden,
+                            p.nombre,p.descripcion, p.precio, p.stock,
+                            p.imagen_nombre, p.imagen_tipo,
+                            p.imagen_tamanio, p.creado, p.estado
+                    FROM productos p
+                    INNER JOIN categorias c 
+                            ON c.id = p.categorias_id
+                    WHERE estado=1 AND upper(p.nombre) LIKE upper(?)
+                    ORDER BY id
+                 """;
+
+        Object[] params = new Object[]{"%" + name + "%"};
+
+        List<Producto> productos
+                 = this.jdbcTemplate.query( sql,
+                                            new ProductoMapper(),
+                                            params
+                    );
+
+         return productos;
+         //
+    }
+
+    @Override
+    public Producto findById(Long id) {
+
+
+        return null;
+
+
+    }
+
+    @Override
+    public void save(Producto producto) {
+
+    }
+
+    @Override
+    public void update(Producto producto) {
+
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+    }
+
 }
 
 class ProductoMapper implements RowMapper<Producto> {

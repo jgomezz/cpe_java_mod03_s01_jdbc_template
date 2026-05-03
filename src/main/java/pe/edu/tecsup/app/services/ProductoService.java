@@ -9,4 +9,13 @@ public interface ProductoService {
 
     List<Producto> findAll();
 
+    List<Producto> findByName(String nombre);
+
+    Producto findById(Long id);
+
+    void save(Producto producto);
+
+    void deleteById(Long id);
+
+    void update(Producto producto);
 }
