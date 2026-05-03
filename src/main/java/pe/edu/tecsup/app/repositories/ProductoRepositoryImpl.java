@@ -25,8 +25,17 @@ public class ProductoRepositoryImpl implements ProductoRepository {
         log.info("findAll products");
 
         String sql = """
-                    SELECT id, nombre
-                    FROM productos
+                    SELECT p.id, p.categorias_id, 
+                            c.nombre AS categorias_nombre, 
+                            c.orden AS categorias_orden,
+                            p.nombre,p.descripcion, p.precio, p.stock,
+                            p.imagen_nombre, p.imagen_tipo,
+                            p.imagen_tamanio, p.creado, p.estado
+                    FROM productos p
+                    INNER JOIN categorias c ON c.id =
+                            p.categorias_id
+                    WHERE estado=1
+                    ORDER BY id
                     """;
 
         List<Producto> productos
@@ -49,6 +58,20 @@ class ProductoMapper implements RowMapper<Producto> {
                 = Producto.builder()
                 .id(rs.getLong("id"))
                 .nombre(rs.getString("nombre"))
+                .descripcion(rs.getString("descripcion"))
+                .precio(rs.getDouble("precio"))
+                .stock(rs.getInt("stock"))
+                .imagen_nombre(rs.getString("imagen_nombre"))
+                .imagen_tipo(rs.getString("imagen_tipo"))
+                .imagen_tamanio(rs.getLong("imagen_tamanio"))
+                .estado(rs.getInt("estado"))
+                .creado(rs.getDate("creado"))
+                .categorias_id(rs.getLong("categorias_id"))
+                .categoria(Categoria.builder()
+                        .id(rs.getLong("categorias_id"))
+                        .nombre(rs.getString("categorias_nombre"))
+                        .orden(rs.getInt("categorias_orden"))
+                        .build())
                 .build();
 
         return producto;
