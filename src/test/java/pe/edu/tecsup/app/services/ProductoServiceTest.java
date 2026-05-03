@@ -43,6 +43,20 @@ class ProductoServiceTest {
 
     @Test
     void testFindById() {
+
+        Long ID = 1L;
+        String EXPECTED_NOMBRE = "Intel Core I7";
+        Double EXPECTED_PRECIO = 1479.99;
+        Integer EXPECTED_STOCK = 6;
+
+        Producto producto =
+                this.productoService.findById(ID);
+        log.info(producto.toString());
+
+        assertNotNull(producto);  // que el producto no sea nulo
+        assertEquals(EXPECTED_NOMBRE, producto.getNombre());
+        assertEquals(EXPECTED_PRECIO, producto.getPrecio());
+        assertEquals(EXPECTED_STOCK, producto.getStock());
     }
 
     @Test

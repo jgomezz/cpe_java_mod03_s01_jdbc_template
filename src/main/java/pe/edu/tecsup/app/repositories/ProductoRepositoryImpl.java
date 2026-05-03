@@ -71,9 +71,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
         List<Producto> productos
                  = this.jdbcTemplate.query( sql,
                                             new ProductoMapper(),
-                                            params
-                    );
-
+                                            params );
          return productos;
          //
     }
@@ -81,8 +79,29 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public Producto findById(Long id) {
 
+        log.info("findById product");
 
-        return null;
+        String sql = """
+                SELECT p.id, p.categorias_id, 
+                            c.nombre AS categorias_nombre,
+                            c.orden AS categorias_orden,
+                            p.nombre,p.descripcion, p.precio, p.stock,
+                            p.imagen_nombre, p.imagen_tipo,
+                            p.imagen_tamanio, p.creado, p.estado
+                    FROM productos p
+                    INNER JOIN categorias c 
+                            ON c.id = p.categorias_id
+                    WHERE estado = 1 AND p.id = ?
+                 """;
+
+        Object[] params = new Object[]{id};
+
+        Producto producto
+                = this.jdbcTemplate.queryForObject( sql,
+                                                    new ProductoMapper(),
+                                                    params );
+        return producto;
+        //
 
 
     }
