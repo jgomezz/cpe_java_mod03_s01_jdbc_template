@@ -22,7 +22,7 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public List<Producto> findAll() {
 
-        log.info("findAll products");
+        log.info("findAll productos");
 
         String sql = """
                     SELECT p.id, p.categorias_id, 
@@ -109,16 +109,60 @@ public class ProductoRepositoryImpl implements ProductoRepository {
     @Override
     public void save(Producto producto) {
 
+        log.info("call save()");
+
+        String sql =
+                """
+                    INSERT INTO productos (categorias_id, nombre,
+                    descripcion, precio, stock, estado,
+                    imagen_nombre, imagen_tipo,
+                    imagen_tamanio)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+               """;
+
+
+        jdbcTemplate.update(sql,
+                producto.getCategorias_id(),
+                producto.getNombre(),
+                producto.getDescripcion(),
+                producto.getPrecio(),
+                producto.getStock(),
+                producto.getEstado(),
+                producto.getImagen_nombre(),
+                producto.getImagen_tipo(),
+                producto.getImagen_tamanio());
+
     }
 
     @Override
     public void update(Producto producto) {
 
+        log.info("call update()");
+
+        String sql = """
+                        UPDATE productos 
+                        SET nombre = ? 
+                        WHERE id = ?;
+                    """;
+
+        Object[] params =
+                new Object[]{producto.getNombre(),
+                             producto.getId()};
+
+        this.jdbcTemplate.update(sql, params);
     }
 
     @Override
     public void deleteById(Long id) {
 
+        log.info("call deleteById()");
+
+        String sql = """
+                        DELETE FROM productos 
+                        WHERE id = ?
+                    """;
+
+        this.jdbcTemplate.update(sql, id);
     }
 
 }
